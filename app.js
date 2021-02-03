@@ -2,11 +2,15 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const path = require('path')
+const hbs = require('express-handlebars')
+const flash = require('connect-flash')
+const session = require('express-session')
+const {mongoDbURL, PORT, globalVariables} = require('./config/config')
 
 const app = express()
 
 /** configure mongoose to connect to mongodb */
-mongoose.connect('mongodb+srv://rootUser:0246813579@cluster0.qfc0j.mongodb.net/cms?retryWrites=true&w=majority', {
+mongoose.connect(mongoDbURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -20,11 +24,28 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, 'public')))
 
-/** routes */
-app.get('/', (req, res) => {
-  res.send('Hello world');
-})
+/** flash and session */
+app.use(session({
+  secret: 'anysecret',
+  saveUninitialized: true,
+  resave: true
+}))
 
-app.listen(3000, () => {
-  console.log(`Server is running on port 3000`)
+app.use(flash())
+
+app.use(globalVariables)
+
+/** setup view engine to use handlebars*/
+app.engine('handlebars', hbs({defaultLayout: 'default'}))
+app.set('view engine', 'handlebars')
+
+/** routes */
+const defaultRoutes = require('./routes/defaultRoutes')
+const adminRoutes = require('./routes/adminRoutes')
+app.use('/', defaultRoutes)
+app.use('/admin', adminRoutes)
+
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`)
 })
