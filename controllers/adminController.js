@@ -15,10 +15,13 @@ module.exports = {
   },
 
   submitPost: (req, res) => {
+    const commentAllowed = req.body.allowComments ? true : false
+
     const newPost = new Post({
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
+      allowComments: commentAllowed
     })
 
     newPost.save()
@@ -30,5 +33,16 @@ module.exports = {
 
   createPost: (req, res) => {
     res.render('admin/posts/create')
-  }
+  },
+
+  editPost: (req, res) => {
+    const id = req.params.id
+
+    Post.findById(id)
+      .lean()
+      .then(post => {
+        console.log(post)
+        res.render('admin/posts/edit', {post: post})
+      })
+  },
 }

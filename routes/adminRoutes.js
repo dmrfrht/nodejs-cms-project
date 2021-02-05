@@ -18,4 +18,7 @@ router.route('/posts/create')
   .get(adminController.createPost)
   .post(adminController.submitPost)
 
+router.route('/posts/edit/:id')
+  .get(adminController.editPost)
+
 module.exports = router

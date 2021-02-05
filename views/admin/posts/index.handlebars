@@ -8,19 +8,23 @@
   <table class="table table-bordered">
     <thead class="bg-dark text-center">
     <tr class="text-white">
-      <th>Id</th>
       <th>Title</th>
       <th>Description</th>
       <th>Status</th>
+      <th>Allowed Comments</th>
+      <th>Actions</th>
     </tr>
     </thead>
     <tbody class="text-center">
     {{#each posts}}
       <tr>
-        <td>{{ _id }}</td>
         <td>{{ title }}</td>
         <td>{{ description }}</td>
         <td>{{ status }}</td>
+        <td>{{ allowComments }}</td>
+        <td>
+          <a href="/admin/posts/edit/{{ _id }}" class="btn btn-success btn-sm">Edit</a>
+        </td>
       </tr>
     {{/each}}
     </tbody>
