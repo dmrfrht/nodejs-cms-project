@@ -6,7 +6,12 @@ module.exports = {
   },
 
   getPosts: (req, res) => {
-    res.render('admin/posts/index')
+    Post.find()
+      .lean()
+      .then(posts => {
+        console.log(posts)
+        res.render('admin/posts/index', {posts: posts})
+      })
   },
 
   submitPost: (req, res) => {
@@ -18,7 +23,6 @@ module.exports = {
 
     newPost.save()
       .then(post => {
-        console.log(post)
         req.flash('success-message', 'Post created successfully')
         res.redirect('/admin/posts')
       })
