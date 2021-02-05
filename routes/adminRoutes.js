@@ -11,6 +11,8 @@ router.all('*', (req, res, next) => {
 router.route('/')
   .get(adminController.index)
 
+/** Posts */
+
 router.route('/posts')
   .get(adminController.getPosts)
 
@@ -23,5 +25,13 @@ router.route('/posts/edit/:id')
 
 router.route('/posts/delete/:id')
   .delete(adminController.deletePost)
+
+/** Categories */
+
+router.route('/category')
+  .get(adminController.getCategories)
+  .post(adminController.createCategory)
+
+
 
 module.exports = router

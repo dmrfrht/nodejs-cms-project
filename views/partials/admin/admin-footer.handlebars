@@ -47,5 +47,31 @@
     setTimeout(function () {
       $('.auto-hide').slideUp(300)
     }, 1500)
+
+    $('#create-category-button').on('click', function (e) {
+      e.preventDefault()
+
+      let data = $('#category-title').val()
+
+      $.ajax({
+        url: '/admin/category',
+        type: 'POST',
+        data: {name: data},
+        success: function (res) {
+          let html = `<tr>
+            <td>${res.title}</td>
+            <td class="d-flex">
+              <a href="/admin/categories/edit/${res._id}" class="btn btn-success btn-sm mr-2">Edit</a>
+
+              <form action="/admin/categories/delete/${res._id}?newMethod=DELETE" method="post">
+                <button class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </td>
+          </tr>`
+
+          $('.category-list').append(html)
+        }
+      })
+    })
   })
 </script>
