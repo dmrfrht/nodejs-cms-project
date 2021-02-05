@@ -22,8 +22,12 @@
         <td>{{ description }}</td>
         <td>{{ status }}</td>
         <td>{{ allowComments }}</td>
-        <td>
-          <a href="/admin/posts/edit/{{ _id }}" class="btn btn-success btn-sm">Edit</a>
+        <td class="d-flex">
+          <a href="/admin/posts/edit/{{ _id }}" class="btn btn-success btn-sm mr-2">Edit</a>
+
+          <form action="/admin/posts/delete/{{_id}}?newMethod=DELETE" method="post">
+            <button class="btn btn-danger btn-sm">Delete</button>
+          </form>
         </td>
       </tr>
     {{/each}}

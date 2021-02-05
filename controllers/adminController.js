@@ -45,4 +45,12 @@ module.exports = {
         res.render('admin/posts/edit', {post: post})
       })
   },
+
+  deletePost: (req, res) => {
+    Post.findByIdAndDelete(req.params.id)
+      .then(deletedPost => {
+        req.flash('success-message', `The post ${deletedPost.title} has been deleted`)
+        res.redirect('/admin/posts')
+      })
+  }
 }
