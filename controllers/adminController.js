@@ -9,8 +9,8 @@ module.exports = {
   getPosts: (req, res) => {
     Post.find()
       .lean()
+      .populate('category')
       .then(posts => {
-        console.log(posts)
         res.render('admin/posts/index', {posts: posts})
       })
   },
@@ -22,7 +22,8 @@ module.exports = {
       title: req.body.title,
       description: req.body.description,
       status: req.body.status,
-      allowComments: commentAllowed
+      allowComments: commentAllowed,
+      category: req.body.category
     })
 
     newPost.save()
@@ -33,7 +34,11 @@ module.exports = {
   },
 
   createPost: (req, res) => {
-    res.render('admin/posts/create')
+    Category.find()
+      .lean()
+      .then(cats => {
+        res.render('admin/posts/create', {cats: cats})
+      })
   },
 
   editPost: (req, res) => {
