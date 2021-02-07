@@ -6,6 +6,7 @@ const hbs = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
+const {selectOption} = require('./config/customFunctions')
 const {mongoDbURL, PORT, globalVariables} = require('./config/config')
 
 const app = express()
@@ -37,7 +38,11 @@ app.use(flash())
 app.use(globalVariables)
 
 /** setup view engine to use handlebars*/
-app.engine('handlebars', hbs({defaultLayout: 'default'}))
+app.engine('handlebars', hbs({
+  defaultLayout: 'default',
+  helpers: {select: selectOption}}
+  )
+)
 app.set('view engine', 'handlebars')
 
 /** method override middleware */

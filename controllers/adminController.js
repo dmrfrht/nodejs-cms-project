@@ -47,8 +47,34 @@ module.exports = {
     Post.findById(id)
       .lean()
       .then(post => {
-        console.log(post)
-        res.render('admin/posts/edit', {post: post})
+
+        Category.find()
+          .lean()
+          .find()
+          .then(cats => {
+            res.render('admin/posts/edit', {post: post, cats: cats})
+          })
+      })
+  },
+
+  editPostSubmit: (req, res) => {
+    const commentAllowed = req.body.allowComments ? true : false
+
+    const id = req.params.id
+
+    Post.findById(id)
+      .then(post => {
+        post.title = req.body.title
+        post.status = req.body.status
+        post.allowComments = commentAllowed
+        post.description = req.body.description
+        post.category = req.body.category
+
+        post.save()
+          .then(updatedPost => {
+            req.flash('success-message', `The post ${updatedPost.title} has been updated`)
+            res.redirect('/admin/posts')
+          })
       })
   },
 
