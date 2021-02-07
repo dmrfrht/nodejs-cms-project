@@ -6,6 +6,8 @@ module.exports = {
     res.render('admin/index')
   },
 
+  /** Posts */
+
   getPosts: (req, res) => {
     Post.find()
       .lean()
@@ -86,6 +88,8 @@ module.exports = {
       })
   },
 
+  /** Categories */
+
   getCategories: (req, res) => {
     Category.find()
       .lean()
@@ -105,6 +109,38 @@ module.exports = {
       newCategory.save()
         .then(category => {
           res.status(200).json(category)
+        })
+    }
+  },
+
+  editCategoryGetRoute: async (req, res) => {
+    const catId = req.params.id
+
+    const cats = await Category.find()
+      .lean()
+
+    Category.findById(catId)
+      .lean()
+      .then(cat => {
+        res.render('admin/category/edit', {cat: cat, cats: cats})
+      })
+  },
+
+  editCategoryPostRoute: (req, res) => {
+    const catId = req.params.id
+    const newTitle = req.body.name
+
+    if (newTitle) {
+      Category.findById(catId)
+        .then(cat => {
+          cat.title = newTitle
+
+          cat.save()
+            .then(updated => {
+              res.status(200).json({
+                url: '/admin/category'
+              })
+            })
         })
     }
   }

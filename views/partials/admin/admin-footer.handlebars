@@ -48,6 +48,7 @@
       $('.auto-hide').slideUp(300)
     }, 1500)
 
+    /** create post */
     $('#create-category-button').on('click', function (e) {
       e.preventDefault()
 
@@ -61,9 +62,9 @@
           let html = `<tr>
             <td>${res.title}</td>
             <td class="d-flex">
-              <a href="/admin/categories/edit/${res._id}" class="btn btn-success btn-sm mr-2">Edit</a>
+              <a href="/admin/category/edit/${res._id}" class="btn btn-success btn-sm mr-2">Edit</a>
 
-              <form action="/admin/categories/delete/${res._id}?newMethod=DELETE" method="post">
+              <form action="/admin/category/delete/${res._id}?newMethod=DELETE" method="post">
                 <button class="btn btn-danger btn-sm">Delete</button>
               </form>
             </td>
@@ -72,6 +73,27 @@
           $('.category-list').append(html)
         }
       })
+
+      $('#category-title').val('')
+    })
+
+    /** update post */
+    $('#update-category-button').on('click', function (e) {
+      e.preventDefault()
+
+      let data = $('#category-title').val()
+      let id = $('#category-id').val()
+
+      $.ajax({
+        url: `/admin/category/edit/${id}`,
+        type: 'POST',
+        data: {name: data},
+        success: function (res) {
+          window.location.href = res.url
+        }
+      })
+
+      // $('#category-title').val('')
     })
   })
 </script>

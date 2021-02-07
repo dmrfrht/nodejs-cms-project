@@ -33,6 +33,10 @@ router.route('/category')
   .get(adminController.getCategories)
   .post(adminController.createCategory)
 
+router.route('/category/edit/:id')
+  .get(adminController.editCategoryGetRoute)
+  .post(adminController.editCategoryPostRoute)
+
 
 
 module.exports = router
