@@ -7,6 +7,7 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const {selectOption} = require('./config/customFunctions')
+const fileUpload = require('express-fileupload')
 const {mongoDbURL, PORT, globalVariables} = require('./config/config')
 
 const app = express()
@@ -32,10 +33,13 @@ app.use(session({
   saveUninitialized: true,
   resave: true
 }))
-
 app.use(flash())
 
+/** global variables */
 app.use(globalVariables)
+
+/** file upload middleware */
+app.use(fileUpload())
 
 /** setup view engine to use handlebars*/
 app.engine('handlebars', hbs({
