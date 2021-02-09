@@ -1,6 +1,12 @@
+const Post = require('../Models/PostModel').Post;
+const Category = require('../Models/CategoryModel').Category;
+
 module.exports = {
-  index: (req, res) => {
-    res.render('default/index')
+  index: async (req, res) => {
+    const posts = await Post.find().lean()
+    const cats = await Category.find().lean()
+
+    res.render('default/index', { posts: posts, cats: cats })
   },
 
   getLogin: (req, res) => {
@@ -11,7 +17,7 @@ module.exports = {
     res.send('tebrikler login oldunuz..')
   },
 
-  getRegister: (req,res) => {
+  getRegister: (req, res) => {
     res.render('default/register')
   },
 
