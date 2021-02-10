@@ -9,6 +9,7 @@ const methodOverride = require('method-override')
 const {selectOption} = require('./config/customFunctions')
 const fileUpload = require('express-fileupload')
 const {mongoDbURL, PORT, globalVariables} = require('./config/config')
+const passport = require('passport');
 
 const app = express()
 
@@ -34,6 +35,10 @@ app.use(session({
   resave: true
 }))
 app.use(flash())
+
+/* Passport Initialize */
+app.use(passport.initialize());
+app.use(passport.session());
 
 /** global variables */
 app.use(globalVariables)
