@@ -65,5 +65,8 @@ router.route('/register')
   .get(defaultController.getRegister)
   .post(defaultController.postRegister)
 
+router.route('/post/:id')
+  .get(defaultController.singlePost)
+
 
 module.exports = router

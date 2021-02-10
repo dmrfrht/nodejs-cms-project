@@ -51,7 +51,7 @@ module.exports = {
         email: req.body.email
       })
     } else {
-      User.findOne({ email: req.body.email })
+      User.findOne({email: req.body.email})
         .then(user => {
           if (user) {
             req.flash('error-message', 'Email already exists, try to login')
@@ -74,4 +74,17 @@ module.exports = {
     }
 
   },
+
+  singlePost: (req, res) => {
+    const id = req.params.id
+    Post.findById(id)
+      .lean()
+      .then(post => {
+        if (!post) {
+          res.status(404).json({message: 'No post found'})
+        } else {
+          res.render('default/singlePost', {post: post})
+        }
+      })
+  }
 }
