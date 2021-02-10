@@ -1,3 +1,11 @@
+{{#if errors}}
+  {{#each errors}}
+    <div class="alert alert-danger alert-dismissible fade show mt-3 auto-hide" role="alert">
+      <strong>{{ message }}</strong>
+    </div>
+  {{/each}}
+{{/if}}
+
 <div class="card card-register mx-auto mt-5">
   <div class="card-header">Register an Account</div>
   <div class="card-body">
