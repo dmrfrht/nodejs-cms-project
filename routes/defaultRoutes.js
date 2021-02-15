@@ -66,7 +66,8 @@ router.route('/register')
   .post(defaultController.postRegister)
 
 router.route('/post/:id')
-  .get(defaultController.singlePost)
+  .get(defaultController.getSinglePost)
+  .post(defaultController.submitComment)
 
 router.get('/logout', (req, res) => {
   req.logOut()

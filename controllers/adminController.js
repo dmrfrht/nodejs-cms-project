@@ -165,15 +165,11 @@ module.exports = {
   /** Comments */
   getComments: (req, res) => {
     Comment.find()
+      .lean()
       .populate('user')
       .then(comments => {
-        console.log(comments)
         res.render('admin/comments/index', {comments: comments})
       })
 
   },
-
-  createComment: (req, res) => {
-
-  }
 }
