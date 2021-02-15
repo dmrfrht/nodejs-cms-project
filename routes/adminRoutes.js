@@ -38,5 +38,10 @@ router.route('/category/edit/:id')
   .get(adminController.editCategoryGetRoute)
   .post(adminController.editCategoryPostRoute)
 
+/** Comments */
+router.route('/comment')
+  .get(adminController.getComments)
+  .post(adminController.createComment)
+
 
 module.exports = router

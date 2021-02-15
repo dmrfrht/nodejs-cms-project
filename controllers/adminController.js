@@ -1,5 +1,6 @@
 const Post = require('../Models/PostModel').Post
 const Category = require('../Models/CategoryModel').Category
+const Comment = require('../Models/CommentModel').Comment
 const {isEmpty} = require('../config/customFunctions')
 
 module.exports = {
@@ -159,5 +160,20 @@ module.exports = {
             })
         })
     }
+  },
+
+  /** Comments */
+  getComments: (req, res) => {
+    Comment.find()
+      .populate('user')
+      .then(comments => {
+        console.log(comments)
+        res.render('admin/comments/index', {comments: comments})
+      })
+
+  },
+
+  createComment: (req, res) => {
+
   }
 }

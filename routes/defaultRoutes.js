@@ -68,5 +68,11 @@ router.route('/register')
 router.route('/post/:id')
   .get(defaultController.singlePost)
 
+router.get('/logout', (req, res) => {
+  req.logOut()
+  req.flash('success-message', 'Logout was successful')
+  res.redirect('/')
+})
+
 
 module.exports = router
